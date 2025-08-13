@@ -1,0 +1,36 @@
+{% set current_year = (namespace(y=none), cycler(0)).__class__ %}{% endset %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MiniBlog{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+  <nav>
+    <a href="{{ url_for('index') }}">Inicio</a>
+    <a href="{{ url_for('categories') }}">Categorías</a>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('create_post') }}">Nuevo post</a>
+      <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Iniciar sesión</a>
+      <a href="{{ url_for('register') }}">Registrarse</a>
+    {% endif %}
+  </nav>
+</header>
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</div>
+<footer><p>MiniBlog • Flask + MySQL</p></footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Inicio • MiniBlog{% endblock %}
+{% block content %}
+<h1>Últimos posts</h1>
+{% for p in posts %}
+  <div class="post-card">
+    <h2><a href="{{ url_for('post_detail', post_id=p.id) }}">{{ p.titulo }}</a></h2>
+    <p class="post-meta">
+      Por <strong>{{ p.autor.username }}</strong> • {{ p.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}
+      {% if p.categoria %} • <span class="badge">{{ p.categoria.nombre }}</span>{% endif %}
+    </p>
+    <p>{{ p.contenido[:200] }}{% if p.contenido|length > 200 %}…{% endif %}</p>
+  </div>
+{% else %}
+  <p>No hay publicaciones aún.</p>
+{% endfor %}
+{% endblock %}

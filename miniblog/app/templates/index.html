@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Miniblog{% endblock %}
+
+{% block content %}
+<h1>Últimos Posts</h1>
+
+{% for post in posts %}
+<div class="post-card">
+    <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.titulo }}</a></h2>
+    <p class="post-meta">Publicado por {{ post.autor.username }} el {{ post.fecha.strftime('%d/%m/%Y') }}</p>
+    <p>{{ post.contenido[:200] }}...</p>
+    <a class="btn" href="{{ url_for('post_detail', post_id=post.id) }}">Leer más</a>
+</div>
+{% else %}
+<p>No hay publicaciones aún.</p>
+{% endfor %}
+{% endblock %}

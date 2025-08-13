@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Categorías{% endblock %}
+{% block content %}
+<h1>Categorías</h1>
+<ul>
+  {% for cat in categorias %}
+    <li><a href="{{ url_for('index', categoria_id=cat.id) }}">{{ cat.nombre }}</a></li>
+  {% else %}
+    <li>No hay categorías.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

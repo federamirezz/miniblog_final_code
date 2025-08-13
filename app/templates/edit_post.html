@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Editar post{% endblock %}
+{% block content %}
+<h1>Editar post</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <div class="form-group">{{ form.titulo.label }} {{ form.titulo() }}</div>
+  <div class="form-group">{{ form.contenido.label }} {{ form.contenido(rows=6) }}</div>
+  <div class="form-group">{{ form.categoria.label }} {{ form.categoria() }}</div>
+  <button class="btn" type="submit">Guardar cambios</button>
+</form>
+{% endblock %}

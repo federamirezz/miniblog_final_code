@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ post.titulo }}{% endblock %}
+{% block content %}
+<div class="post-card">
+  <h1>{{ post.titulo }}</h1>
+  <p class="post-meta">
+    Por <strong>{{ post.autor.username }}</strong> • {{ post.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}
+    {% if post.categoria %} • <span class="badge">{{ post.categoria.nombre }}</span>{% endif %}
+  </p>
+  <div class="content">{{ post.contenido | nl2br }}</div>
+</div>
+<h2>Comentarios</h2>
+{% for c in comentarios %}
+  <div class="post-card">
+    <p><strong>{{ c.autor.username }}</strong> • {{ c.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</p>
+    <p>{{ c.texto | nl2br }}</p>
+  </div>
+{% else %}
+  <p>No hay comentarios todavía.</p>
+{% endfor %}
+{% if current_user.is_authenticated %}
+<form method="post">
+  {{ form.hidden_tag() }}
+  <div class="form-group">{{ form.texto.label }} {{ form.texto(rows=3) }}</div>
+  <button class="btn" type="submit">Comentar</button>
+</form>
+{% else %}
+<p>Para comentar, <a href="{{ url_for('login') }}">iniciá sesión</a>.</p>
+{% endif %}
+{% endblock %}
